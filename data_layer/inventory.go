@@ -40,3 +40,20 @@ func AddToInventory(player string, item string, quantity int) error {
 	inventory[player][item] += quantity
 	return nil
 }
+
+// Remove item from player's inventory
+func UseItems(player string, item string, quantity int) error {
+	// Check if player exists in inventory
+	if val, ok := inventory[player]; ok {
+		// Check if item exists in player inventory
+		if _, ok := val[item]; ok && val[item] > 1 {
+			// If player and item exists in inventory
+			// then reduce by the quantity used
+			inventory[player][item] -= quantity
+			return nil
+		} else {
+			return errors.New("this player does not have this item")
+		}
+	}
+	return errors.New("this player does not exist")
+}

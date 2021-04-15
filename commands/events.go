@@ -29,9 +29,15 @@ func Get(player *discordgo.User) (map[string]int, error) {
 }
 
 // A player uses an item by a certain quantity from inventory
-func Use(player *discordgo.User, item string, quantity int) {}
+func Use(player *discordgo.User, item string, quantity int) error {
+	err := data_layer.UseItems(player.Username, item, quantity)
+	if err != nil {
+		return errors.New("can't use item. ")
+	}
+	return nil
+}
 
-// A player deletes an item from inventory
+// A player completely deletes an item from inventory
 func Delete(player *discordgo.User, item string) {}
 
 // A player updates an item from inventory to a target quantity
